@@ -53,7 +53,7 @@ export default function Aside(props: any) {
                         {activeField === field.id && (
                             <div className="absolute -left-4 top-0 h-full w-1.5 bg-white rounded-full" />
                         )}
-                        <Button className={`bg-white opacity-80 w-[90%] cursor-pointer ${activeField === field.id ? 'opacity-100' : ''}`} onClick={() => setActiveField(field.id)}>
+                        <Button className={`bg-white opacity-80 h-12 w-12 cursor-pointer ${activeField === field.id ? 'opacity-100' : ''}`} onClick={() => setActiveField(field.id)}>
                             <img src={field.icon} alt={field.name} />
                         </Button>
                     </div>
