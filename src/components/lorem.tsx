@@ -1,6 +1,6 @@
 export default function Lorem() {
   return (
-    <div className="p-6 text-[#959595] relative h-full">
+    <div className="p-6 text-[#959595] h-full flex flex-col gap-6">
       <p className="text-base">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. In suscipit
         suscipit porttitor. Suspendisse ex lorem, rhoncus nec ante eu, venenatis
@@ -11,7 +11,7 @@ export default function Lorem() {
         ornare neque tincidunt vel. Proin ac lacinia erat, et commodo felis.
         Phasellus tempor tellus eu vulputate tempus.
       </p>
-      <div className="absolute bottom-6">
+      <div className="">
         <img src="/src/assets/emplooye.svg" alt="emplooye" />
       </div>
     </div>
