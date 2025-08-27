@@ -1,7 +1,8 @@
 import { useState } from "react";
 import bg from "./assets/bg.svg"
-import Aside from "./components/aside";
-import Soon from "./components/soon";
+import Aside from "./components/sections/aside";
+import Soon from "./components/sections/soon";
+import InitialPage from "./components/sections/initialPage";
 
 function App() {
   const [activeField, setActiveField] = useState<number | null>(2);
@@ -22,7 +23,7 @@ function App() {
     >
         {
           activeField === 2 ? (
-            <h1>{activeField}</h1>
+            <InitialPage />
           )
             :
           (
