@@ -1,68 +1,11 @@
-import stepsImg from "../assets/steps.svg";
-import { useState } from "react";
 
-export default function Steps() {
-  const [activeStep, setActiveStep] = useState(1);
-  const steps = [
-    {
-      id: 1,
-      title: "Step 1",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 2,
-      title: "Step 2",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 3,
-      title: "Step 3",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 4,
-      title: "Step 4",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 5,
-      title: "Step 5",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 6,
-      title: "Step 6",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 7,
-      title: "Step 7",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 8,
-      title: "Step 8",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-    {
-      id: 9,
-      title: "Step 9",
-      isCompleted: false,
-      icon: stepsImg,
-    },
-  ];
+
+export default function Steps(props: any) {
+  const { activeStep, setActiveStep, steps } = props;
 
   return (
     <div className="h-full w-full grid grid-cols-9 justify-between py-2 relative">
-      {steps.map((step, index) => (
+      {steps.map((step: any, index: number) => (
         <div
           key={step.id}
           className="h-full w-full flex flex-col items-center justify-center gap-2 relative"
@@ -70,11 +13,15 @@ export default function Steps() {
           <div className="relative flex items-center justify-center w-full">
             <button
               id={`b${step.id}`}
+              disabled={step.id > 1 && !steps.slice(0, step.id - 1).every((s: any) => s.isCompleted)}
               className={`h-12 w-12 cursor-pointer rounded-2xl flex items-center justify-center relative z-10 ${
-                activeStep === step.id || step.isCompleted
+                activeStep === step.id
                   ? "bg-[#649FBF] border-2 border-black shadow-black"
+                  : step.isCompleted
+                  ? "bg-[#649FBF]"
                   : "bg-[#DBDBDB]"
-              } hover:border-2 border-black shadow-2xl hover:bg-[#649FBF]`}
+              } 
+                 hover:border-2 border-black shadow-2xl hover:bg-[#649FBF] disabled:cursor-not-allowed`}
               onClick={() => setActiveStep(step.id)}
             >
               <img

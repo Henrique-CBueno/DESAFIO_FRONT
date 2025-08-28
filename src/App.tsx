@@ -8,12 +8,12 @@ function App() {
   const [activeField, setActiveField] = useState<number | null>(2);
 
   return(
-    <div className={`h-screen w-screen grid grid-cols-[5%_1fr] dark:bg-[#F2F2F2] overflow-hidden`}>
+    <div className={`h-screen w-screen grid grid-cols-[8%_1fr] bg-[#F2F2F2] overflow-x-hidden`}>
       <aside className="">
         <Aside activeField={activeField} setActiveField={setActiveField} />
       </aside>
 
-      <main className="bg-green-50 p-8" 
+      <main 
       style={{
       backgroundImage: `url(${bg})`,
       backgroundSize: "auto",

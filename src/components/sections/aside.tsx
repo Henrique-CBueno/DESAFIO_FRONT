@@ -45,8 +45,8 @@ export default function Aside(props: any) {
   const { activeField, setActiveField } = props;
 
   return (
-    <div className="h-[80%] grid items-center justify-center rounded-r-2xl bg-[#649FBF]">
-      <div className="w-[5%] top-[5%] h-10 absolute bg-white"></div>
+    <div className="h-[80%] w-[8%] p-2 grid items-center justify-center rounded-r-2xl fixed top-0 left-0 bg-[#649FBF] ">
+      <div className="w-full top-[5%] h-10 absolute bg-white"></div>
       <div className="flex flex-col gap-2">
         {fields.map((field) => (
           <div
