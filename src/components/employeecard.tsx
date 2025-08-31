@@ -1,10 +1,11 @@
 import { FaEllipsisH } from "react-icons/fa"
 import { Badge } from "./ui/badge"
+import { Button } from "./ui/button"
 
 type EmployeeCardProps = {
     id: number
     name: string
-    cpf: number
+    cpf: string
     role: string
     isActive: boolean
 }
@@ -21,9 +22,9 @@ export default function EmployeeCard(props: EmployeeCardProps) {
                     <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">{props.role}</Badge>
                 </div>
             </div>
-            <button className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-fit h-full flex items-center justify-center ml-auto">
+            <Button className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-fit h-full flex items-center justify-center ml-auto">
                 <FaEllipsisH  color="white" className="w-4 h-4 mx-4"/>
-            </button>
+            </Button>
         </div>
     )
 }

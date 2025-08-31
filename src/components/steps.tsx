@@ -1,5 +1,3 @@
-
-
 export default function Steps(props: any) {
   const { activeStep, setActiveStep, steps } = props;
 

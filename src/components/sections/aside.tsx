@@ -45,7 +45,7 @@ export default function Aside(props: any) {
   const { activeField, setActiveField } = props;
 
   return (
-    <div className="h-[80%] w-[8%] p-2 grid items-center justify-center rounded-r-2xl fixed top-0 left-0 bg-[#649FBF] ">
+    <div className="h-[80%] w-[6%] p-2 grid items-center justify-center rounded-r-2xl fixed top-0 left-0 bg-[#649FBF] ">
       <div className="w-full top-[5%] h-10 absolute bg-white"></div>
       <div className="flex flex-col gap-2">
         {fields.map((field) => (
@@ -55,7 +55,7 @@ export default function Aside(props: any) {
           >
             <div
               className={`
-        absolute -left-4 top-0 h-full w-1.5 bg-white rounded-full
+        absolute -left-[25%] top-0 h-full w-1.5 bg-white rounded-full
         transition-opacity duration-200 ease-in-out
         ${
           activeField === field.id ? "opacity-100" : "opacity-0"

@@ -8,7 +8,7 @@ function App() {
   const [activeField, setActiveField] = useState<number | null>(2);
 
   return(
-    <div className={`h-screen w-screen grid grid-cols-[8%_1fr] bg-[#F2F2F2] overflow-x-hidden`}>
+    <div className={`h-screen w-screen grid grid-cols-[6%_1fr] bg-[#F2F2F2] overflow-x-hidden`}>
       <aside className="">
         <Aside activeField={activeField} setActiveField={setActiveField} />
       </aside>
@@ -25,7 +25,7 @@ function App() {
           activeField === 2 ? (
             <InitialPage />
           )
-            :
+          :
           (
             <Soon />
           )
