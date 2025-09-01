@@ -2,16 +2,20 @@ import { useState } from "react";
 import bg from "./assets/bg.svg"
 import Aside from "./components/sections/aside";
 import Soon from "./components/sections/soon";
-import InitialPage from "./components/sections/initialPage";
+import InitialPage, { type Step } from "./components/sections/initialPage";
 import { mockUsers } from "./mocks/users";
 import { motion, AnimatePresence } from "framer-motion";
+
 import { FaTimes } from "react-icons/fa";
+import { steps as mockSteps } from "./mocks/steps";
+
 
 function App() {
   const [activeField, setActiveField] = useState<number | null>(2);
   const [users, setUsers] = useState(mockUsers)
   const [activeStep, setActiveStep] = useState(1);
   const [popup, setOpenPopup] = useState(false);
+  const [steps, setSteps] = useState<Step[]>(mockSteps);
 
   return(
     <div className={`h-screen w-screen grid grid-cols-[6%_1fr] bg-[#F2F2F2] overflow-x-hidden`}>
@@ -33,7 +37,10 @@ function App() {
             setUsers={setUsers}
             activeStep={activeStep}
             setActiveStep={setActiveStep}
-            setOpenPopup={setOpenPopup}/>
+            setOpenPopup={setOpenPopup}
+            steps={steps}
+            setSteps={setSteps}
+            />
           )
           :
           (

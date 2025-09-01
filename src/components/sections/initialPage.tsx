@@ -1,12 +1,11 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import Employees from "../employees";
 import Lorem from "../lorem";
 import Steps from "../steps";
-import { steps as mockDataSource } from "../../mocks/steps";
 import NextPrev from "../nextPrev";
 import Soon from "./soon";
 
-interface Step {
+export interface Step {
   id: number;
   title: string;
   isCompleted: boolean;
@@ -14,19 +13,18 @@ interface Step {
 }
 
 export default function InitialPage(props: any) {
-  const [steps, setSteps] = useState<Step[]>(mockDataSource);
   
 
   const updateStepCompletion = (stepId: number, isCompleted: boolean) => {
-    const stepToUpdate = mockDataSource.find((step) => step.id === stepId);
+    const stepToUpdate = props.steps.find((step: Step) => step.id === stepId);
     if (stepToUpdate) {
       stepToUpdate.isCompleted = isCompleted;
     }
-    setSteps([...mockDataSource]);
+    props.setSteps([...props.steps]);
   };
 
   const currentStepObject = useMemo(() => {
-    return mockDataSource.find(step => step.id === props.activeStep);
+    return props.steps.find((step: Step) => step.id === props.activeStep);
   }, [props.activeStep]);
 
   const handleNext = () => {
@@ -55,8 +53,8 @@ export default function InitialPage(props: any) {
       props.setActiveStep(stepId);
       return;
     }
-    const previousSteps = mockDataSource.slice(0, stepId - 1);
-    const allPreviousStepsCompleted = previousSteps.every(step => step.isCompleted);
+    const previousSteps = props.steps.slice(0, stepId - 1);
+    const allPreviousStepsCompleted = previousSteps.every((step: Step) => step.isCompleted);
     if (allPreviousStepsCompleted) {
       props.setActiveStep(stepId);
     } else {
@@ -73,7 +71,7 @@ export default function InitialPage(props: any) {
               <Steps
                 activeStep={props.activeStep}
                 setActiveStep={handleStepClick}
-                steps={steps}
+                steps={props.steps}
               />
             </div>
           
@@ -85,7 +83,7 @@ export default function InitialPage(props: any) {
                   <Employees
                     activeStep={props.activeStep}
                     onStepToggle={updateStepCompletion}
-                    steps={steps}
+                    steps={props.steps}
                     users={props.users}
                     setUsers={props.setUsers}
                     setOpenPopup={props.setOpenPopup}
@@ -99,9 +97,9 @@ export default function InitialPage(props: any) {
           <NextPrev
             onBack={handleBack}
             onNext={handleNext}
-            isNextDisabled={!currentStepObject?.isCompleted || props.activeStep === mockDataSource.length}
+            isNextDisabled={!currentStepObject?.isCompleted || props.activeStep === props.steps.length}
             isBackDisabled={props.activeStep === 1}
-            isLastStep={props.activeStep === mockDataSource.length}
+            isLastStep={props.activeStep === props.steps.length}
           />
       </main>
     ) : (
@@ -111,7 +109,7 @@ export default function InitialPage(props: any) {
                 <Steps
                   activeStep={props.activeStep}
                   setActiveStep={handleStepClick}
-                  steps={steps}
+                  steps={props.steps}
                 />
               </div>
           <div>
@@ -124,9 +122,9 @@ export default function InitialPage(props: any) {
               onBack={handleBack}
               onNext={handleNext}
               // isNextDisabled={!currentStepObject?.isCompleted || activeStep === mockDataSource.length}
-              isNextDisabled={props.activeStep === mockDataSource.length}
+              isNextDisabled={props.activeStep === props.steps.length}
               isBackDisabled={props.activeStep === 1}
-              isLastStep={props.activeStep === mockDataSource.length}
+              isLastStep={props.activeStep === props.steps.length}
             />
         </div>
             
