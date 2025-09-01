@@ -1,15 +1,23 @@
 import { HiChevronDown } from "react-icons/hi";
 import type { EmployeeFormState } from "./addEmployee";
+import { z } from "zod";
+import { employeeSchema } from '../schemas/employeeSchemas';
+
+// Helper type for the flattened field errors
+type FieldErrors = z.inferFlattenedErrors<typeof employeeSchema>['fieldErrors'];
 
 export default function EmployeePersonalData({
   form,
   update,
+  errors,
 }: {
   form: EmployeeFormState;
   update: <K extends keyof EmployeeFormState>(
     key: K,
     value: EmployeeFormState[K]
   ) => void;
+  // Correctly typed 'errors' prop
+  errors: FieldErrors | undefined;
 }) {
   return (
     <section className="grid gap-3 rounded-xl border border-[#649FBF] shadow-md p-4 bg-white">
@@ -17,7 +25,7 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">Nome</label>
           <input
-            className="border rounded-md py-1.5 px-2 border-[#649FBF]"
+            className={`border rounded-md py-1.5 px-2 ${errors?.name ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
             placeholder="Nome"
@@ -31,7 +39,7 @@ export default function EmployeePersonalData({
               <input
                 type="radio"
                 name="gender"
-                className="appearance-none h-4 w-4 rounded-full border-2 border-[#649FBF] checked:bg-[#649FBF]"
+                className={`appearance-none h-4 w-4 rounded-full border-2 checked:bg-[#649FBF] ${errors?.gender ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
                 checked={form.gender === "Feminino"}
                 onChange={() => update("gender", "Feminino")}
               />
@@ -41,7 +49,7 @@ export default function EmployeePersonalData({
               <input
                 type="radio"
                 name="gender"
-                className="appearance-none h-4 w-4 rounded-full border-2 border-[#649FBF] checked:bg-[#649FBF]"
+                className={`appearance-none h-4 w-4 rounded-full border-2 checked:bg-[#649FBF] ${errors?.gender ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
                 checked={form.gender === "Masculino"}
                 onChange={() => update("gender", "Masculino")}
               />
@@ -53,7 +61,7 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">CPF</label>
           <input
-            className="border rounded-md py-1.5 px-2 border-[#649FBF]"
+            className={`border rounded-md py-1.5 px-2 ${errors?.cpf ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.cpf}
             onChange={(e) => update("cpf", e.target.value)}
             placeholder="000.000.000-00"
@@ -64,7 +72,7 @@ export default function EmployeePersonalData({
           <label className="text-sm">Data de Nascimento</label>
           <input
             type="date"
-            className="border rounded-md p-2 border-[#649FBF]"
+            className={`border rounded-md p-2 ${errors?.birthDate ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.birthDate}
             onChange={(e) => update("birthDate", e.target.value)}
           />
@@ -73,7 +81,7 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">RG</label>
           <input
-            className="border rounded-md py-1.5 px-2 border-[#649FBF]"
+            className={`border rounded-md py-1.5 px-2 ${errors?.rg ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.rg}
             onChange={(e) => update("rg", e.target.value)}
             placeholder="RG"
@@ -84,7 +92,7 @@ export default function EmployeePersonalData({
           <label className="text-sm">Cargo</label>
           <div className="relative">
             <select
-              className="w-full p-2 pr-8 border rounded-md border-[#649FBF] appearance-none bg-white focus:outline-none focus:ring-2 focus:ring-[#649FBF]"
+              className={`w-full p-2 pr-8 border rounded-md appearance-none bg-white focus:outline-none focus:ring-2 ${errors?.role ? 'border-[#AB2E46] focus:ring-red-800' : 'border-[#649FBF] focus:ring-[#649FBF]'}`}
               value={form.role}
               onChange={(e) => update("role", e.target.value)}
             >

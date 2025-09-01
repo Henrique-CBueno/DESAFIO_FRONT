@@ -6,6 +6,11 @@ import EmployeePersonalData from "./EmployeePersonalData";
 import EmployeeEPISection from "./EmployeeEPISection";
 import EmployeeHealthDoc from "./EmployeeHealthDoc";
 import type { EmployeeFormStateWithID } from "./employeecard";
+import { employeeSchema, activitySchema, epiSchema } from '../schemas/employeeSchemas';
+import { z } from "zod";
+
+// CORRECTED HELPER TYPE
+type FlattenedErrors = z.inferFlattenedErrors<typeof employeeSchema>;
 
 type ActivityEPI = {
   activityName: string;
@@ -51,12 +56,14 @@ export default function AddEmployee(
     onBack?: () => void;
     users: EmployeeFormStateWithID[];
     setUsers: React.Dispatch<React.SetStateAction<EmployeeFormStateWithID[]>>;
-    employeeToEdit?: EmployeeFormStateWithID; // Prop para passar o funcionário a ser editado
+    employeeToEdit?: EmployeeFormStateWithID;
   }) {
 
   const [form, setForm] = useState<EmployeeFormState>(
     props.employeeToEdit || defaultFormState
   );
+  
+  const [errors, setErrors] = useState<FlattenedErrors | undefined>(undefined);
 
   function update<K extends keyof EmployeeFormState>(
     key: K,
@@ -68,27 +75,73 @@ export default function AddEmployee(
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
+    const validationResult = employeeSchema.safeParse(form);
+
+    if (!validationResult.success) {
+      const flattenedErrors = validationResult.error?.flatten();
+      
+      // Processar erros de activities individualmente
+      const processedErrors = { ...flattenedErrors };
+      if (form.usesEPI && form.activities.length > 0) {
+        const activityErrors = form.activities.map((activity, index) => {
+          const activityValidation = activitySchema.safeParse(activity);
+          if (!activityValidation.success) {
+            const activityFlattened = activityValidation.error.flatten();
+            
+            // Processar erros de EPIs individualmente
+            if (activity.epis.length > 0) {
+              const epiErrors = activity.epis.map((epi, epiIndex) => {
+                const epiValidation = epiSchema.safeParse(epi);
+                if (!epiValidation.success) {
+                  return epiValidation.error.flatten();
+                }
+                return null;
+              });
+                             activityFlattened.fieldErrors = {
+                 ...activityFlattened.fieldErrors,
+                 epis: epiErrors as any
+               };
+            }
+            
+            return activityFlattened;
+          }
+          return null;
+        });
+        processedErrors.fieldErrors = {
+          ...processedErrors.fieldErrors,
+          activities: activityErrors as any
+        };
+      }
+      
+             setErrors(processedErrors);
+       console.error("❌ Erros de validação:", processedErrors);
+
+
+      return;
+    }
+    
+    setErrors(undefined);
+    console.log("✅ Validação bem-sucedida!");
+  
     if (form.id) {
       const updatedEmployee = {
-        ...form, // o id já está aqui
+        ...form,
         activities: form.usesEPI ? form.activities : [],
         allEpis: form.usesEPI
           ? form.activities.flatMap((activity) => activity.epis)
           : [],
         healthDoc: form.healthDoc ?? { file: null, fileName: "" },
       };
-
+  
       props.setUsers((currentUsers: any) =>
         currentUsers.map((user: any) =>
           user.id === form.id ? updatedEmployee : user
         )
       );
       console.log("Employee atualizado:", updatedEmployee);
-    }
-
-    else {
+    } else {
       const newEmployee = {
-
+  
         id:
           props.users.length > 0
             ? Math.max(...props.users.map((u) => u.id)) + 1
@@ -100,11 +153,11 @@ export default function AddEmployee(
           : [],
         healthDoc: form.healthDoc ?? { file: null, fileName: "" },
       };
-
+  
       props.setUsers((currentUsers) => [...currentUsers, newEmployee]);
       console.log("Novo employee adicionado:", newEmployee);
     }
-
+  
     if (props.onBack) props.onBack();
   }
 
@@ -118,9 +171,9 @@ export default function AddEmployee(
       >
         <EmployeeStatus value={form.isActive} onChange={(v) => update("isActive", v)} />
 
-        <EmployeePersonalData form={form} update={update} />
+        <EmployeePersonalData form={form} update={update} errors={errors?.fieldErrors} />
 
-        <EmployeeEPISection form={form} setForm={setForm} update={update} />
+        <EmployeeEPISection form={form} setForm={setForm} update={update} errors={errors?.fieldErrors as any} />
 
         {form.usesEPI && (
           <EmployeeHealthDoc form={form} update={update} />

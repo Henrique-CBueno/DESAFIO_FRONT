@@ -1,7 +1,8 @@
 import { FiChevronDown } from "react-icons/fi";
 import { Button } from "./ui/button";
 import EPIRow from "./EPIRow.tsx";
-import type {EmployeeFormState} from "./addEmployee.tsx";
+import type { EmployeeFormState } from "./addEmployee.tsx";
+
 
 type ActivityEPI = {
   activityName: string;
@@ -17,6 +18,7 @@ export default function ActivityCard({
   removeEPI,
   removeActivity,
   form,
+  errors,
 }: {
   activity: ActivityEPI;
   activityIndex: number;
@@ -30,6 +32,7 @@ export default function ActivityCard({
   removeEPI: (activityIndex: number, epiIndex: number) => void;
   removeActivity: (activityIndex: number) => void;
   form: EmployeeFormState;
+  errors: any;
 }) {
   const field =
     "w-full rounded-md border border-[#649FBF] bg-white py-1.5 px-2 text-sm " +
@@ -37,12 +40,15 @@ export default function ActivityCard({
 
   return (
     <div className="grid gap-3 border rounded-md p-4 border-[#649FBF] shadow-md">
-      {/* Seleção da atividade */}
       <div className="grid gap-1">
         <label className="text-sm">Selecione a atividade</label>
         <div className="relative">
           <select
-            className={`${field} appearance-none pr-10`}
+            className={`${field} appearance-none pr-10 ${
+              errors?.activityName
+                ? "border-[#AB2E46] focus:ring-red-800"
+                : "border-[#649FBF] focus:ring-[#649FBF]/40"
+            }`}
             value={activity.activityName}
             onChange={(e) => updateActivityName(activityIndex, e.target.value)}
           >
@@ -56,10 +62,10 @@ export default function ActivityCard({
             className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3A3A3A]"
             size={18}
           />
+          
         </div>
       </div>
 
-      {/* EPIs */}
       {activity.epis.map((epi, epiIndex) => (
         <EPIRow
           key={epiIndex}
@@ -70,10 +76,10 @@ export default function ActivityCard({
           addEPI={addEPI}
           removeEPI={removeEPI}
           isLastItem={epiIndex === activity.epis.length - 1}
+          errors={errors?.fieldErrors?.epis?.[epiIndex] as any}
         />
       ))}
 
-      {/* Botão de remover atividade */}
       {form.activities.length > 1 && (
         <Button
           type="button"

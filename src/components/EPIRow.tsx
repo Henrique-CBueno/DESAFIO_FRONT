@@ -9,6 +9,7 @@ export default function EPIRow({
   addEPI,
   removeEPI,
   isLastItem,
+  errors,
 }: {
   epi: { epi: string; caNumber: string };
   epiIndex: number;
@@ -21,10 +22,13 @@ export default function EPIRow({
   addEPI: (activityIndex: number) => void;
   removeEPI: (activityIndex: number, epiIndex: number) => void;
   isLastItem: boolean;
+  errors: any;
 }) {
   const field =
-    "w-full rounded-md border border-[#649FBF] bg-white py-1.5 px-2 text-sm " +
-    "outline-none focus:ring-2 focus:ring-[#649FBF]/40 placeholder:text-gray-400";
+    "w-full rounded-md border bg-white py-1.5 px-2 text-sm " +
+    "outline-none focus:ring-2 placeholder:text-gray-400";
+
+
 
   const buttonClasses =
     "w-full h-fit rounded-md border border-[#649FBF] bg-white py-1.5 text-sm cursor-pointer hover:scale-105";
@@ -35,7 +39,11 @@ export default function EPIRow({
         <label className="text-sm">Selecione o EPI</label>
         <div className="relative">
           <select
-            className={`${field} appearance-none pr-10`}
+                         className={`${field} appearance-none pr-10 ${
+               errors?.fieldErrors?.epi
+                 ? "border-[#AB2E46] focus:ring-red-800/40"
+                 : "border-[#649FBF] focus:ring-[#649FBF]/40"
+             }`}
             value={epi.epi}
             onChange={(e) =>
               updateEPI(activityIndex, epiIndex, { epi: e.target.value })
@@ -51,13 +59,18 @@ export default function EPIRow({
             className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[#3A3A3A]"
             size={18}
           />
+          
         </div>
       </div>
 
       <div className="grid gap-1">
         <label className="text-sm">Informe o número do CA</label>
         <input
-          className={field}
+                     className={`${field} ${
+             errors?.fieldErrors?.caNumber
+               ? "border-[#AB2E46] focus:ring-red-800/40"
+               : "border-[#649FBF] focus:ring-[#649FBF]/40"
+           }`}
           value={epi.caNumber}
           onChange={(e) =>
             updateEPI(activityIndex, epiIndex, { caNumber: e.target.value })
@@ -65,6 +78,7 @@ export default function EPIRow({
           placeholder="00000"
           type="number"
         />
+        
       </div>
 
       <div className="grid grid-cols-3 self-end">

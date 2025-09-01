@@ -3,11 +3,16 @@ import { FiCheck } from "react-icons/fi";
 import type { EmployeeFormState } from "./addEmployee.tsx";
 import { Button } from "./ui/button";
 import ActivityCard from "./ActivityCard.tsx";
+import { z } from "zod";
+import { employeeSchema } from '../schemas/employeeSchemas';
+
+type FieldErrors = z.inferFlattenedErrors<typeof employeeSchema>['fieldErrors'];
 
 export default function EmployeeEPISection({
   form,
   setForm,
   update,
+  errors,
 }: {
   form: EmployeeFormState;
   setForm: React.Dispatch<React.SetStateAction<EmployeeFormState>>;
@@ -15,8 +20,11 @@ export default function EmployeeEPISection({
     key: K,
     value: EmployeeFormState[K]
   ) => void;
+  errors: FieldErrors | undefined;
 }) {
   const [checked, setChecked] = useState(false);
+
+
 
   function addActivity() {
     setForm((prev) => ({
@@ -24,7 +32,7 @@ export default function EmployeeEPISection({
       activities: [
         ...prev.activities,
         {
-          activityName: `Atividade ${prev.activities.length + 1}`,
+          activityName: "",
           epis: [{ epi: "", caNumber: "" }],
         },
       ],
@@ -88,7 +96,6 @@ export default function EmployeeEPISection({
         <label className="text-base font-bold">
           Quais EPIs o trabalhador usa na atividade?
         </label>
-
         <label className="flex items-center gap-2 text-base cursor-pointer select-none">
           <input
             type="checkbox"
@@ -97,7 +104,6 @@ export default function EmployeeEPISection({
             className="hidden peer"
             onClick={() => setChecked(!checked)}
           />
-
           {checked ? (
             <span className="w-5 h-5 flex items-center justify-center border-2 border-[#649FBF] rounded-[2px]">
               <FiCheck className="text-[#649FBF] text-sm" />
@@ -105,11 +111,9 @@ export default function EmployeeEPISection({
           ) : (
             <span className="w-5 h-5 flex items-center justify-center border-2 border-[#649FBF] rounded-[2px]" />
           )}
-
           <span>O trabalhador não usa EPI.</span>
         </label>
       </div>
-
       {!checked && (
         <div className="grid gap-4">
           {form.activities.map((activity, activityIndex) => (
@@ -123,13 +127,13 @@ export default function EmployeeEPISection({
               removeEPI={removeEPI}
               removeActivity={removeActivity}
               form={form}
+              errors={errors?.activities?.[activityIndex] as any}
             />
           ))}
-
           <Button
             type="button"
             className="rounded-md border border-[#649FBF] bg-white py-2 text-sm 
-                      focus:ring-2 focus:ring-[#649FBF]/40 mt-3 cursor-pointer"
+                        focus:ring-2 focus:ring-[#649FBF]/40 mt-3 cursor-pointer"
             onClick={addActivity}
           >
             <span className="text-[#649FBF]">Adicionar outra atividade</span>
