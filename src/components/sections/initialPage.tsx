@@ -15,7 +15,7 @@ interface Step {
 
 export default function InitialPage(props: any) {
   const [steps, setSteps] = useState<Step[]>(mockDataSource);
-  const [activeStep, setActiveStep] = useState(1);
+  
 
   const updateStepCompletion = (stepId: number, isCompleted: boolean) => {
     const stepToUpdate = mockDataSource.find((step) => step.id === stepId);
@@ -26,8 +26,8 @@ export default function InitialPage(props: any) {
   };
 
   const currentStepObject = useMemo(() => {
-    return mockDataSource.find(step => step.id === activeStep);
-  }, [activeStep]);
+    return mockDataSource.find(step => step.id === props.activeStep);
+  }, [props.activeStep]);
 
   const handleNext = () => {
     // if (currentStepObject?.isCompleted && activeStep < mockDataSource.length) {
@@ -35,30 +35,30 @@ export default function InitialPage(props: any) {
     // } else if (!currentStepObject?.isCompleted) {
     //   alert("Por favor, conclua a etapa atual para poder avançar.");
     // }
-    if(activeStep === 1 && !currentStepObject?.isCompleted) {
+    if(props.activeStep === 1 && !currentStepObject?.isCompleted) {
          alert("Por favor, conclua a etapa atual para poder avançar.");
     }
-    updateStepCompletion(activeStep, true)
-    setActiveStep(activeStep + 1);
+    updateStepCompletion(props.activeStep, true)
+    props.setActiveStep(props.activeStep + 1);
   };
 
   const handleBack = () => {
-    if (activeStep > 1) {
-      updateStepCompletion(activeStep, false)
-      setActiveStep(activeStep - 1);
+    if (props.activeStep > 1) {
+      updateStepCompletion(props.activeStep, false)
+      props.setActiveStep(props.activeStep - 1);
     }
   };
 
   const handleStepClick = (stepId: number) => {
-    if (stepId === activeStep) return;
-    if (stepId < activeStep) {
-      setActiveStep(stepId);
+    if (stepId === props.activeStep) return;
+    if (stepId < props.activeStep) {
+      props.setActiveStep(stepId);
       return;
     }
     const previousSteps = mockDataSource.slice(0, stepId - 1);
     const allPreviousStepsCompleted = previousSteps.every(step => step.isCompleted);
     if (allPreviousStepsCompleted) {
-      setActiveStep(stepId);
+      props.setActiveStep(stepId);
     } else {
       alert("Você precisa concluir as etapas anteriores primeiro.");
     }
@@ -66,12 +66,12 @@ export default function InitialPage(props: any) {
 
   return (
 
-    activeStep === 1 ? (
+    props.activeStep === 1 ? (
       <main className="w-full h-full flex flex-col gap-8 p-8">
         <div className="grid grid-cols-3 gap-6 h-fit w-full">
             <div className="bg-white shadow py-4 w-full rounded-[1.25rem] col-span-3">
               <Steps
-                activeStep={activeStep}
+                activeStep={props.activeStep}
                 setActiveStep={handleStepClick}
                 steps={steps}
               />
@@ -83,11 +83,12 @@ export default function InitialPage(props: any) {
                 </div>
                 <div className="bg-white shadow h-full w-full rounded-[1.25rem] col-span-3">
                   <Employees
-                    activeStep={activeStep}
+                    activeStep={props.activeStep}
                     onStepToggle={updateStepCompletion}
                     steps={steps}
                     users={props.users}
                     setUsers={props.setUsers}
+                    setOpenPopup={props.setOpenPopup}
                   />
                 </div>
               </div>
@@ -98,9 +99,9 @@ export default function InitialPage(props: any) {
           <NextPrev
             onBack={handleBack}
             onNext={handleNext}
-            isNextDisabled={!currentStepObject?.isCompleted || activeStep === mockDataSource.length}
-            isBackDisabled={activeStep === 1}
-            isLastStep={activeStep === mockDataSource.length}
+            isNextDisabled={!currentStepObject?.isCompleted || props.activeStep === mockDataSource.length}
+            isBackDisabled={props.activeStep === 1}
+            isLastStep={props.activeStep === mockDataSource.length}
           />
       </main>
     ) : (
@@ -108,7 +109,7 @@ export default function InitialPage(props: any) {
         <div>
           <div className="bg-white shadow py-4 w-full h-fit rounded-[1.25rem]">
                 <Steps
-                  activeStep={activeStep}
+                  activeStep={props.activeStep}
                   setActiveStep={handleStepClick}
                   steps={steps}
                 />
@@ -123,9 +124,9 @@ export default function InitialPage(props: any) {
               onBack={handleBack}
               onNext={handleNext}
               // isNextDisabled={!currentStepObject?.isCompleted || activeStep === mockDataSource.length}
-              isNextDisabled={activeStep === mockDataSource.length}
-              isBackDisabled={activeStep === 1}
-              isLastStep={activeStep === mockDataSource.length}
+              isNextDisabled={props.activeStep === mockDataSource.length}
+              isBackDisabled={props.activeStep === 1}
+              isLastStep={props.activeStep === mockDataSource.length}
             />
         </div>
             

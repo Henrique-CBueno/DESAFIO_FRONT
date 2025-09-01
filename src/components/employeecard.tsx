@@ -11,6 +11,7 @@ type EmployeeCardProps = {
   employee: EmployeeFormStateWithID;
   setUsers: React.Dispatch<React.SetStateAction<EmployeeFormStateWithID[]>>;
   onEdit: (employee: EmployeeFormStateWithID) => void;
+  setOpenPopup: any
 };
 
 export default function EmployeeCard(props: EmployeeCardProps) {
@@ -29,6 +30,7 @@ export default function EmployeeCard(props: EmployeeCardProps) {
       setUsers((currentUsers) =>
         currentUsers.filter((user) => user.id !== employeeId)
       );
+      props.setOpenPopup(true)
     }
   };
 

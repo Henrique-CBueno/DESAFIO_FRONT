@@ -12,6 +12,7 @@ type EmployeesProps = {
   steps: any[];
   activeStep: number;
   onStepToggle: (stepId: number, isCompleted: boolean) => void;
+  setOpenPopup: any
 };
 
 export default function Employees(props: EmployeesProps) {
@@ -105,6 +106,7 @@ export default function Employees(props: EmployeesProps) {
               employee={user}
               setUsers={props.setUsers}
               onEdit={handleEdit}
+              setOpenPopup={props.setOpenPopup}
             />
           ))}
         </div>
