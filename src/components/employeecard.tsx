@@ -1,50 +1,88 @@
-import { FaEllipsisH } from "react-icons/fa"
-import { Badge } from "./ui/badge"
-import { Button } from "./ui/button"
-import { useState, useRef } from "react"
-import { useOnClickOutside } from "../hooks/useOnClickOutside"
+import { FaEllipsisH } from "react-icons/fa";
+import { Badge } from "./ui/badge";
+import { Button } from "./ui/button";
+import { useState, useRef } from "react";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import type { EmployeeFormState } from "./addEmployee";
+
+export type EmployeeFormStateWithID = EmployeeFormState & { id: number };
 
 type EmployeeCardProps = {
-    id: number
-    name: string
-    cpf: string
-    role: string
-    isActive: boolean
-}
+  employee: EmployeeFormStateWithID;
+  setUsers: React.Dispatch<React.SetStateAction<EmployeeFormStateWithID[]>>;
+  onEdit: (employee: EmployeeFormStateWithID) => void;
+};
 
 export default function EmployeeCard(props: EmployeeCardProps) {
-    const [isOpened, setIsOpened] = useState(false)
+  const [isOpened, setIsOpened] = useState(false);
+  const popupRef = useRef<HTMLDivElement>(null);
+  useOnClickOutside(popupRef, () => setIsOpened(false));
 
-    const popupRef = useRef<HTMLDivElement>(null);
-    useOnClickOutside(popupRef, () => setIsOpened(false));
+  const { employee, setUsers, onEdit } = props;
 
-    function tooglePopUp() {
-        setIsOpened(!isOpened)
+  function togglePopUp() {
+    setIsOpened(!isOpened);
+  }
+
+  const handleDeleteEmployee = (employeeId: number) => {
+    if (window.confirm("Tem certeza que deseja excluir este funcionário?")) {
+      setUsers((currentUsers) =>
+        currentUsers.filter((user) => user.id !== employeeId)
+      );
     }
+  };
 
-    return (
-        <div className={`w-full flex relative justify-between items-center rounded-[.625rem] ${props.isActive ? 'bg-[#649fbf33]' : 'bg-[#F2F2F2]'} `}>
-            <div className="w-full p-4 grid gap-2">
-                <h2 className="text-2xl text-[#707070]">{props.name}</h2>
-                <div className="flex gap-4">
-                    <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">{props.cpf}</Badge>
-                    <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">{props.isActive ? "Ativo" : "Inativo"}</Badge>
-                    <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">{props.role}</Badge>
-                </div>
-            </div>
-            <Button 
-            className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-fit h-full flex items-center justify-center ml-auto"
-            onClick={tooglePopUp}
-            >
-                <FaEllipsisH  color="white" className="w-4 h-4 mx-4"/>
-            </Button>
+  const handleEditEmployee = () => {
+    onEdit(employee);
+    setIsOpened(false);
+  };
 
-            {isOpened && (
-                <div ref={popupRef} className="grid grid-rows-2 h-[95%] shadow-xl absolute right-0 top-0 bg-white rounded-[10px] text-[#959595] z-20">
-                    <button className="cursor-pointer flex items-center justify-center px-10 border-b border-[#DBDBDB] hover:text-[#649FBF]">Alterar</button>
-                    <button className="cursor-pointer flex items-center justify-center px-10 hover:text-[#649FBF]">Excluir</button>
-                </div>
-            )}
+  return (
+    <div
+      className={`w-full flex relative justify-between items-center rounded-[.625rem] ${
+        employee.isActive ? "bg-[#649fbf33]" : "bg-[#F2F2F2]"
+      } `}
+    >
+      <div className="w-full p-4 grid gap-2">
+        <h2 className="text-2xl text-[#707070]">{employee.name}</h2>
+        <div className="flex gap-4">
+          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+            {employee.cpf}
+          </Badge>
+          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+            {employee.isActive ? "Ativo" : "Inativo"}
+          </Badge>
+          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+            {employee.role}
+          </Badge>
         </div>
-    )
+      </div>
+      <Button
+        className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-fit h-full flex items-center justify-center ml-auto"
+        onClick={togglePopUp}
+      >
+        <FaEllipsisH color="white" className="w-4 h-4 mx-4" />
+      </Button>
+
+      {isOpened && (
+        <div
+          ref={popupRef}
+          className="grid grid-rows-2 h-[95%] shadow-xl absolute right-0 top-0 bg-white rounded-[10px] text-[#959595] z-20"
+        >
+          <button
+            className="cursor-pointer flex items-center justify-center px-10 border-b border-[#DBDBDB] hover:text-[#649FBF]"
+            onClick={handleEditEmployee}
+          >
+            Alterar
+          </button>
+          <button
+            className="cursor-pointer flex items-center justify-center px-10 hover:text-[#649FBF]"
+            onClick={() => handleDeleteEmployee(employee.id)}
+          >
+            Excluir
+          </button>
+        </div>
+      )}
+    </div>
+  );
 }

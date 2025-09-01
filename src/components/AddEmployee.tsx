@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { mockUsers } from "../mocks/users";
 import { Button } from "./ui/button";
 import EmployeeHeader from "./EmployeeHeader";
 import EmployeeStatus from "./EmployeeStatus";
 import EmployeePersonalData from "./EmployeePersonalData";
 import EmployeeEPISection from "./EmployeeEPISection";
 import EmployeeHealthDoc from "./EmployeeHealthDoc";
+import type { EmployeeFormStateWithID } from "./employeecard";
 
 type ActivityEPI = {
   activityName: string;
@@ -18,6 +18,7 @@ type HealthDoc = {
 };
 
 export type EmployeeFormState = {
+  id?: number;
   isActive: boolean;
   name: string;
   gender: "Feminino" | "Masculino" | "";
@@ -30,21 +31,32 @@ export type EmployeeFormState = {
   healthDoc: HealthDoc;
 };
 
-export default function AddEmployee(props: { onBack?: () => void }) {
-  const [form, setForm] = useState<EmployeeFormState>({
-    isActive: true,
-    name: "",
-    gender: "",
-    cpf: "",
-    birthDate: "",
-    rg: "",
-    role: "",
-    usesEPI: true,
-    activities: [
-      { activityName: "Atividade 1", epis: [{ epi: "", caNumber: "" }] },
-    ],
-    healthDoc: { file: null, fileName: "" },
-  });
+const defaultFormState: EmployeeFormState = {
+  isActive: true,
+  name: "",
+  gender: "",
+  cpf: "",
+  birthDate: "",
+  rg: "",
+  role: "",
+  usesEPI: true,
+  activities: [
+    { activityName: "Atividade 1", epis: [{ epi: "", caNumber: "" }] },
+  ],
+  healthDoc: { file: null, fileName: "" },
+};
+
+export default function AddEmployee(
+  props: {
+    onBack?: () => void;
+    users: EmployeeFormStateWithID[];
+    setUsers: React.Dispatch<React.SetStateAction<EmployeeFormStateWithID[]>>;
+    employeeToEdit?: EmployeeFormStateWithID; // Prop para passar o funcionário a ser editado
+  }) {
+
+  const [form, setForm] = useState<EmployeeFormState>(
+    props.employeeToEdit || defaultFormState
+  );
 
   function update<K extends keyof EmployeeFormState>(
     key: K,
@@ -56,19 +68,42 @@ export default function AddEmployee(props: { onBack?: () => void }) {
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
 
-    const newEmployee = {
-      id:
-        mockUsers.length > 0 ? mockUsers[mockUsers.length - 1].id + 1 : 1,
-      ...form,
-      activities: form.usesEPI ? form.activities : [],
-      allEpis: form.usesEPI
-        ? form.activities.flatMap((activity) => activity.epis)
-        : [],
-      healthDoc: form.healthDoc ?? { file: null, fileName: "" },
-    };
+    if (form.id) {
+      const updatedEmployee = {
+        ...form, // o id já está aqui
+        activities: form.usesEPI ? form.activities : [],
+        allEpis: form.usesEPI
+          ? form.activities.flatMap((activity) => activity.epis)
+          : [],
+        healthDoc: form.healthDoc ?? { file: null, fileName: "" },
+      };
 
-    mockUsers.push(newEmployee);
-    console.log("Novo employee adicionado:", newEmployee);
+      props.setUsers((currentUsers: any) =>
+        currentUsers.map((user: any) =>
+          user.id === form.id ? updatedEmployee : user
+        )
+      );
+      console.log("Employee atualizado:", updatedEmployee);
+    }
+
+    else {
+      const newEmployee = {
+
+        id:
+          props.users.length > 0
+            ? Math.max(...props.users.map((u) => u.id)) + 1
+            : 1,
+        ...form,
+        activities: form.usesEPI ? form.activities : [],
+        allEpis: form.usesEPI
+          ? form.activities.flatMap((activity) => activity.epis)
+          : [],
+        healthDoc: form.healthDoc ?? { file: null, fileName: "" },
+      };
+
+      props.setUsers((currentUsers) => [...currentUsers, newEmployee]);
+      console.log("Novo employee adicionado:", newEmployee);
+    }
 
     if (props.onBack) props.onBack();
   }

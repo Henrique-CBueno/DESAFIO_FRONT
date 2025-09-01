@@ -13,7 +13,7 @@ interface Step {
   icon: any;
 }
 
-export default function InitialPage() {
+export default function InitialPage(props: any) {
   const [steps, setSteps] = useState<Step[]>(mockDataSource);
   const [activeStep, setActiveStep] = useState(1);
 
@@ -86,6 +86,8 @@ export default function InitialPage() {
                     activeStep={activeStep}
                     onStepToggle={updateStepCompletion}
                     steps={steps}
+                    users={props.users}
+                    setUsers={props.setUsers}
                   />
                 </div>
               </div>

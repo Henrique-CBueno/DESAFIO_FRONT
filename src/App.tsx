@@ -3,9 +3,11 @@ import bg from "./assets/bg.svg"
 import Aside from "./components/sections/aside";
 import Soon from "./components/sections/soon";
 import InitialPage from "./components/sections/initialPage";
+import { mockUsers } from "./mocks/users";
 
 function App() {
   const [activeField, setActiveField] = useState<number | null>(2);
+  const [users, setUsers] = useState(mockUsers)
 
   return(
     <div className={`h-screen w-screen grid grid-cols-[6%_1fr] bg-[#F2F2F2] overflow-x-hidden`}>
@@ -23,7 +25,8 @@ function App() {
     >
         {
           activeField === 2 ? (
-            <InitialPage />
+            <InitialPage users={users}
+            setUsers={setUsers}/>
           )
           :
           (
