@@ -45,7 +45,7 @@ const defaultFormState: EmployeeFormState = {
   role: "",
   usesEPI: true,
   activities: [
-    { activityName: "Atividade 1", epis: [{ epi: "", caNumber: "" }] },
+    { activityName: "", epis: [{ epi: "", caNumber: "" }] },
   ],
   healthDoc: { file: null, fileName: "" },
 };

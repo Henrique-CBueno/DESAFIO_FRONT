@@ -30,7 +30,7 @@ export default function EPIRow({
 
   const handleCANumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    
+
     const numbersOnly = value.replace(/[^0-9]/g, '');
     updateEPI(activityIndex, epiIndex, { caNumber: numbersOnly });
   };
@@ -54,7 +54,7 @@ export default function EPIRow({
               updateEPI(activityIndex, epiIndex, { epi: e.target.value })
             }
           >
-            <option value="">Selecione</option>
+            <option value="" disabled>Selecione</option>
             <option>Capacete</option>
             <option>Luvas</option>
             <option>Óculos de proteção</option>

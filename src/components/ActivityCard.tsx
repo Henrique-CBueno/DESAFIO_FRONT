@@ -44,11 +44,7 @@ export default function ActivityCard({
         <label className="text-sm">Selecione a atividade</label>
         <div className="relative">
           <select
-            className={`${field} appearance-none pr-10 ${
-              errors?.activityName
-                ? "border-[#AB2E46] focus:ring-red-800"
-                : "border-[#649FBF] focus:ring-[#649FBF]/40"
-            }`}
+            className={`${field} appearance-none pr-10 ${errors?.fieldErrors?.activityName ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
             value={activity.activityName}
             onChange={(e) => updateActivityName(activityIndex, e.target.value)}
           >

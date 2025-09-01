@@ -67,7 +67,12 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">Nome</label>
           <input
-            className={`border rounded-md py-1.5 px-2 ${errors?.name ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
+            className={`border rounded-md py-1.5 px-2 focus:outline-none 
+            ${errors?.name 
+              ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' 
+              : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
+            
+
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
             placeholder="Nome"
@@ -103,7 +108,8 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">CPF</label>
           <input
-            className={`border rounded-md py-1.5 px-2 ${errors?.cpf ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
+            className={`border rounded-md py-1.5 px-2 focus:outline-none ${errors?.cpf ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' 
+              : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
             value={form.cpf}
             onChange={handleCPFChange}
             placeholder="000.000.000-00"
@@ -114,7 +120,7 @@ export default function EmployeePersonalData({
           <label className="text-sm">Data de Nascimento</label>
           <input
             type="date"
-            className={`border rounded-md p-2 ${errors?.birthDate ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
+            className={`border rounded-md focus:outline-none d p-2 ${errors?.birthDate ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
             value={form.birthDate}
             onChange={(e) => update("birthDate", e.target.value)}
           />
@@ -123,7 +129,7 @@ export default function EmployeePersonalData({
         <div className="grid gap-1">
           <label className="text-sm">RG</label>
           <input
-            className={`border rounded-md py-1.5 px-2 ${errors?.rg ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
+            className={`border rounded-md focus:outline-none py-1.5 px-2 ${errors?.rg ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
             value={form.rg}
             onChange={handleRGChange}
             placeholder="00.000.000-00"
@@ -134,7 +140,7 @@ export default function EmployeePersonalData({
           <label className="text-sm">Cargo</label>
           <div className="relative">
             <select
-              className={`w-full p-2 pr-8 border rounded-md appearance-none bg-white focus:outline-none focus:ring-2 ${errors?.role ? 'border-[#AB2E46] focus:ring-red-800' : 'border-[#649FBF] focus:ring-[#649FBF]'}`}
+              className={`w-full p-2 pr-8 border  rounded-md appearance-none bg-white focus:outline-none focus:ring-2 focus:outline-none ${errors?.role ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
               value={form.role}
               onChange={(e) => update("role", e.target.value)}
             >
