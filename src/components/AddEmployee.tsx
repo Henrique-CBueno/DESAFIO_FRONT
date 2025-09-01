@@ -81,13 +81,13 @@ export default function AddEmployee(
       
       const processedErrors = { ...flattenedErrors };
       if (form.usesEPI && form.activities.length > 0) {
-        const activityErrors = form.activities.map((activity, index) => {
+        const activityErrors = form.activities.map((activity) => {
           const activityValidation = activitySchema.safeParse(activity);
           if (!activityValidation.success) {
             const activityFlattened = activityValidation.error.flatten();
             
             if (activity.epis.length > 0) {
-              const epiErrors = activity.epis.map((epi, epiIndex) => {
+              const epiErrors = activity.epis.map((epi) => {
                 const epiValidation = epiSchema.safeParse(epi);
                 if (!epiValidation.success) {
                   return epiValidation.error.flatten();
