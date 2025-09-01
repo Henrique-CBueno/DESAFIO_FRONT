@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FiCheck } from "react-icons/fi";
-import type { EmployeeFormState } from "./addEmployee.tsx";
+import type { EmployeeFormState } from "./AddEmployee";
 import { Button } from "./ui/button";
 import ActivityCard from "./ActivityCard.tsx";
 import { z } from "zod";

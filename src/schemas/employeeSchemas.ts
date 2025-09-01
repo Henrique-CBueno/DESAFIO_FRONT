@@ -23,9 +23,9 @@ export const employeeSchema = z.object({
     message: "Selecione um gênero",
   }),
 
-  cpf: z.string().min(11, "CPF inválido").regex(/^\d+$/, "CPF deve conter apenas dígitos"),
+  cpf: z.string().min(11, "CPF inválido"),
   birthDate: z.string().min(1, "Data de nascimento obrigatória"),
-  rg: z.string().min(1, "RG obrigatório"),
+  rg: z.string().min(11, "RG obrigatório"),
 
   role: z.string()
     .min(1, "Selecione um cargo")

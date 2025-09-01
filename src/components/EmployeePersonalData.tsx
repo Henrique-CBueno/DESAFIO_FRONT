@@ -1,9 +1,8 @@
 import { HiChevronDown } from "react-icons/hi";
-import type { EmployeeFormState } from "./addEmployee";
+import type { EmployeeFormState } from "./AddEmployee";
 import { z } from "zod";
 import { employeeSchema } from '../schemas/employeeSchemas';
 
-// Helper type for the flattened field errors
 type FieldErrors = z.inferFlattenedErrors<typeof employeeSchema>['fieldErrors'];
 
 export default function EmployeePersonalData({
@@ -16,9 +15,52 @@ export default function EmployeePersonalData({
     key: K,
     value: EmployeeFormState[K]
   ) => void;
-  // Correctly typed 'errors' prop
   errors: FieldErrors | undefined;
 }) {
+  const formatCPF = (value: string) => {
+    const numbersOnly = value.replace(/[^0-9]/g, '');
+    
+    const limitedNumbers = numbersOnly.slice(0, 11);
+    
+    if (limitedNumbers.length <= 3) {
+      return limitedNumbers;
+    } else if (limitedNumbers.length <= 6) {
+      return `${limitedNumbers.slice(0, 3)}.${limitedNumbers.slice(3)}`;
+    } else if (limitedNumbers.length <= 9) {
+      return `${limitedNumbers.slice(0, 3)}.${limitedNumbers.slice(3, 6)}.${limitedNumbers.slice(6)}`;
+    } else {
+      return `${limitedNumbers.slice(0, 3)}.${limitedNumbers.slice(3, 6)}.${limitedNumbers.slice(6, 9)}-${limitedNumbers.slice(9)}`;
+    }
+  };
+
+  const handleCPFChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatCPF(e.target.value);
+    update("cpf", formattedValue);
+  };
+
+  const formatRG = (value: string) => {
+    const numbersOnly = value.replace(/[^0-9X]/gi, '').toUpperCase();
+    
+    const limitedChars = numbersOnly.slice(0, 9);
+    
+    let formatted = limitedChars;
+    if (limitedChars.length > 2) {
+      formatted = `${limitedChars.slice(0, 2)}.${limitedChars.slice(2)}`;
+    }
+    if (limitedChars.length > 5) {
+      formatted = `${limitedChars.slice(0, 2)}.${limitedChars.slice(2, 5)}.${limitedChars.slice(5)}`;
+    }
+    if (limitedChars.length > 8) {
+      formatted = `${limitedChars.slice(0, 2)}.${limitedChars.slice(2, 5)}.${limitedChars.slice(5, 8)}-${limitedChars.slice(8)}`;
+    }
+    
+    return formatted;
+  };
+  
+  const handleRGChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formattedValue = formatRG(e.target.value);
+    update("rg", formattedValue);
+  };
   return (
     <section className="grid gap-3 rounded-xl border border-[#649FBF] shadow-md p-4 bg-white">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -63,7 +105,7 @@ export default function EmployeePersonalData({
           <input
             className={`border rounded-md py-1.5 px-2 ${errors?.cpf ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.cpf}
-            onChange={(e) => update("cpf", e.target.value)}
+            onChange={handleCPFChange}
             placeholder="000.000.000-00"
           />
         </div>
@@ -83,8 +125,8 @@ export default function EmployeePersonalData({
           <input
             className={`border rounded-md py-1.5 px-2 ${errors?.rg ? 'border-[#AB2E46]' : 'border-[#649FBF]'}`}
             value={form.rg}
-            onChange={(e) => update("rg", e.target.value)}
-            placeholder="RG"
+            onChange={handleRGChange}
+            placeholder="00.000.000-00"
           />
         </div>
 

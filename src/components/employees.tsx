@@ -2,7 +2,7 @@ import { TiPlus } from "react-icons/ti";
 import { Button } from "./ui/button";
 import EmployeeCard from "./employeecard";
 import type { EmployeeFormStateWithID } from "./employeecard";
-import EmployeeForm from "./addEmployee";
+import EmployeeForm from "./AddEmployee";
 import { useState, useMemo } from "react";
 import Switch from "./switch";
 

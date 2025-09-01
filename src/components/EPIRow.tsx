@@ -28,7 +28,12 @@ export default function EPIRow({
     "w-full rounded-md border bg-white py-1.5 px-2 text-sm " +
     "outline-none focus:ring-2 placeholder:text-gray-400";
 
-
+  const handleCANumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    const numbersOnly = value.replace(/[^0-9]/g, '');
+    updateEPI(activityIndex, epiIndex, { caNumber: numbersOnly });
+  };
 
   const buttonClasses =
     "w-full h-fit rounded-md border border-[#649FBF] bg-white py-1.5 text-sm cursor-pointer hover:scale-105";
@@ -72,9 +77,7 @@ export default function EPIRow({
                : "border-[#649FBF] focus:ring-[#649FBF]/40"
            }`}
           value={epi.caNumber}
-          onChange={(e) =>
-            updateEPI(activityIndex, epiIndex, { caNumber: e.target.value })
-          }
+                     onChange={handleCANumberChange}
           placeholder="00000"
           type="number"
         />

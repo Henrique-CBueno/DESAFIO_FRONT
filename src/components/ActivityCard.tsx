@@ -1,7 +1,7 @@
 import { FiChevronDown } from "react-icons/fi";
 import { Button } from "./ui/button";
 import EPIRow from "./EPIRow.tsx";
-import type { EmployeeFormState } from "./addEmployee.tsx";
+import type { EmployeeFormState } from "./AddEmployee";
 
 
 type ActivityEPI = {

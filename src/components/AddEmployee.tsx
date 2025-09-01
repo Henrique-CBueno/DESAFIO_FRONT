@@ -9,7 +9,6 @@ import type { EmployeeFormStateWithID } from "./employeecard";
 import { employeeSchema, activitySchema, epiSchema } from '../schemas/employeeSchemas';
 import { z } from "zod";
 
-// CORRECTED HELPER TYPE
 type FlattenedErrors = z.inferFlattenedErrors<typeof employeeSchema>;
 
 type ActivityEPI = {
@@ -80,7 +79,6 @@ export default function AddEmployee(
     if (!validationResult.success) {
       const flattenedErrors = validationResult.error?.flatten();
       
-      // Processar erros de activities individualmente
       const processedErrors = { ...flattenedErrors };
       if (form.usesEPI && form.activities.length > 0) {
         const activityErrors = form.activities.map((activity, index) => {
@@ -88,7 +86,6 @@ export default function AddEmployee(
           if (!activityValidation.success) {
             const activityFlattened = activityValidation.error.flatten();
             
-            // Processar erros de EPIs individualmente
             if (activity.epis.length > 0) {
               const epiErrors = activity.epis.map((epi, epiIndex) => {
                 const epiValidation = epiSchema.safeParse(epi);
@@ -114,14 +111,13 @@ export default function AddEmployee(
       }
       
              setErrors(processedErrors);
-       console.error("❌ Erros de validação:", processedErrors);
 
 
       return;
     }
     
     setErrors(undefined);
-    console.log("✅ Validação bem-sucedida!");
+    
   
     if (form.id) {
       const updatedEmployee = {
@@ -138,7 +134,6 @@ export default function AddEmployee(
           user.id === form.id ? updatedEmployee : user
         )
       );
-      console.log("Employee atualizado:", updatedEmployee);
     } else {
       const newEmployee = {
   
@@ -155,7 +150,6 @@ export default function AddEmployee(
       };
   
       props.setUsers((currentUsers) => [...currentUsers, newEmployee]);
-      console.log("Novo employee adicionado:", newEmployee);
     }
   
     if (props.onBack) props.onBack();

@@ -3,7 +3,7 @@ import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
 import { useState, useRef } from "react";
 import { useOnClickOutside } from "../hooks/useOnClickOutside";
-import type { EmployeeFormState } from "./addEmployee";
+import type { EmployeeFormState } from "./AddEmployee";
 
 export type EmployeeFormStateWithID = EmployeeFormState & { id: number };
 
