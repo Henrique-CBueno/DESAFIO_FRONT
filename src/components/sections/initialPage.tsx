@@ -30,15 +30,21 @@ export default function InitialPage() {
   }, [activeStep]);
 
   const handleNext = () => {
-    if (currentStepObject?.isCompleted && activeStep < mockDataSource.length) {
-      setActiveStep(activeStep + 1);
-    } else if (!currentStepObject?.isCompleted) {
-      alert("Por favor, conclua a etapa atual para poder avançar.");
+    // if (currentStepObject?.isCompleted && activeStep < mockDataSource.length) {
+    //   setActiveStep(activeStep + 1);
+    // } else if (!currentStepObject?.isCompleted) {
+    //   alert("Por favor, conclua a etapa atual para poder avançar.");
+    // }
+    if(activeStep === 1 && !currentStepObject?.isCompleted) {
+         alert("Por favor, conclua a etapa atual para poder avançar.");
     }
+    updateStepCompletion(activeStep, true)
+    setActiveStep(activeStep + 1);
   };
 
   const handleBack = () => {
     if (activeStep > 1) {
+      updateStepCompletion(activeStep, false)
       setActiveStep(activeStep - 1);
     }
   };
@@ -114,7 +120,8 @@ export default function InitialPage() {
           <NextPrev
               onBack={handleBack}
               onNext={handleNext}
-              isNextDisabled={!currentStepObject?.isCompleted || activeStep === mockDataSource.length}
+              // isNextDisabled={!currentStepObject?.isCompleted || activeStep === mockDataSource.length}
+              isNextDisabled={activeStep === mockDataSource.length}
               isBackDisabled={activeStep === 1}
               isLastStep={activeStep === mockDataSource.length}
             />

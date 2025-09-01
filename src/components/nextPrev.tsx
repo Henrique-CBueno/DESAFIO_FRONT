@@ -5,7 +5,7 @@ interface NextPrevProps {
   onNext: () => void;
   isNextDisabled: boolean;
   isBackDisabled: boolean;
-  isLastStep: boolean;
+  isLastStep: boolean
 }
 
 export default function NextPrev({ 
@@ -13,7 +13,7 @@ export default function NextPrev({
   onNext, 
   isNextDisabled, 
   isBackDisabled, 
-  isLastStep
+  isLastStep,
 }: NextPrevProps) {
   
 

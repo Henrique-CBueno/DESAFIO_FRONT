@@ -2,7 +2,7 @@ import { TiPlus } from "react-icons/ti";
 import { Button } from "./ui/button";
 import { mockUsers } from "../mocks/users";
 import EmployeeCard from "./employeecard";
-import AddEmployee from "./AddEmployee";
+import AddEmployee from "./addEmployee.tsx";
 import { useState } from "react";
 import Switch from "./switch";
 

@@ -1,5 +1,5 @@
 import { HiChevronDown } from "react-icons/hi";
-import type { EmployeeFormState } from "./AddEmployee";
+import type { EmployeeFormState } from "./addEmployee";
 
 export default function EmployeePersonalData({
   form,

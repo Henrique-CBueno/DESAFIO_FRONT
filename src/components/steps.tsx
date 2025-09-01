@@ -1,8 +1,9 @@
+
 export default function Steps(props: any) {
   const { activeStep, setActiveStep, steps } = props;
 
   return (
-    <div className="h-full w-full grid grid-cols-9 justify-between py-2 relative">
+    <div className="h-full w-full grid grid-cols-9 justify-between pb-2 relative">
       {steps.map((step: any, index: number) => (
         <div
           key={step.id}
@@ -45,6 +46,8 @@ export default function Steps(props: any) {
           >
             {step.title}
           </label>
+
+          <h1 className={`text-sm font-bold text-[#272F33] ${!step.isCompleted ? 'invisible' : ''}`}>Concluído</h1>
         </div>
       ))}
     </div>

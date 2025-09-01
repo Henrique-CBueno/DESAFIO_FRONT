@@ -1,4 +1,4 @@
-import type { EmployeeFormState } from "./AddEmployee";
+import type { EmployeeFormState } from "./addEmployee";
 
 export default function EmployeeHealthDoc({
   form,
