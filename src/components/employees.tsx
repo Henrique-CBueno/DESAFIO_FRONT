@@ -61,10 +61,10 @@ export default function Employees(props: EmployeesProps) {
 
   return (
     <div className="h-full">
-      <header className="px-6 py-3 rounded-t-[1.25rem] text-white text-[1.75rem] bg-[#649FBF]">
+      <header className="px-4 lg:px-6 py-3 rounded-t-[1.25rem] text-white text-[1.75rem] bg-[#649FBF]">
         <h1>Funcionário(s)</h1>
       </header>
-      <div className="h-full flex flex-col px-6 py-4 gap-4">
+      <div className="h-full flex flex-col px-4 lg:px-6 py-4 gap-4">
         <div className="grid gap-4">
           <div>
             <Button
@@ -76,7 +76,7 @@ export default function Employees(props: EmployeesProps) {
             </Button>
           </div>
           <div className="flex w-full">
-            <div className="flex gap-6 flex-1">
+            <div className="flex gap-2 lg:gap-6 flex-1">
               <Button
                 className="p-[0.625rem] bg-white flex-1 text-[#649FBF] border-[1px] border-[#649FBF] cursor-pointer hover:bg-white hover:scale-105"
                 onClick={() => setOnlyActives(true)}

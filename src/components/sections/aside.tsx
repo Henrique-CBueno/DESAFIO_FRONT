@@ -45,9 +45,9 @@ export default function Aside(props: any) {
   const { activeField, setActiveField } = props;
 
   return (
-    <div className="h-[80%] w-[6%] p-2 grid items-center justify-center rounded-r-2xl fixed top-0 left-0 bg-[#649FBF] ">
+    <div className="h-[80%] w-full lg:w-[6%] p-4 lg:p-2 flex flex-col gap-2 lg:grid items-center justify-center rounded-r-2xl relative lg:fixed top-0 left-0 bg-[#649FBF] ">
       <div className="w-full top-[5%] h-10 absolute bg-white"></div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 mt-[100%]">
         {fields.map((field) => (
           <div
             key={field.id}
@@ -64,7 +64,7 @@ export default function Aside(props: any) {
     `}
             />
             <Button
-              className={`bg-white opacity-80 h-12 w-12 cursor-pointer ${
+              className={`bg-white opacity-80 h-15 w-15 lg:h-12 lg:w-12 cursor-pointer ${
                 activeField === field.id ? "opacity-100" : ""
               } ${field.additionalIcon ? "position-relative" : ''} hover:bg-white hover:opacity-100`}
               onClick={() => setActiveField(field.id)}

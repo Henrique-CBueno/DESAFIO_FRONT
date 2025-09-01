@@ -9,7 +9,7 @@ export default function EmployeeStatus({
 }) {
   return (
     <section className="grid gap-3 rounded-xl border border-[#649FBF] p-4 bg-white">
-      <div className="flex items-center justify-between text-base text-[#272F33]">
+      <div className="flex items-center justify-between text-base text-center text-[#272F33]">
         <label>O trabalhador está ativo ou inativo? </label>
         <Switch2
           id="isNewUserActive"

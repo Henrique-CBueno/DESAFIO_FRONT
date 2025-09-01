@@ -65,8 +65,9 @@ export default function InitialPage(props: any) {
   return (
 
     props.activeStep === 1 ? (
-      <main className="w-full h-full flex flex-col gap-8 p-8">
+      <main className="w-full h-full flex flex-col p-4 gap-4 lg:gap-8 lg:p-8">
         <div className="grid grid-cols-3 gap-6 h-fit w-full">
+
             <div className="bg-white shadow py-4 w-full rounded-[1.25rem] col-span-3">
               <Steps
                 activeStep={props.activeStep}
@@ -75,11 +76,11 @@ export default function InitialPage(props: any) {
               />
             </div>
           
-              <div className="col-span-3 grid grid-cols-5 gap-8">
-                <div className="bg-white shadow h-fit w-full rounded-[1.25rem] col-span-2">
+              <div className="col-span-3 flex flex-col gap-6 lg:grid lg:grid-cols-5 ">
+                <div className="bg-white shadow h-fit w-full rounded-[1.25rem] lg:col-span-2">
                   <Lorem />
                 </div>
-                <div className="bg-white shadow h-full w-full rounded-[1.25rem] col-span-3">
+                <div className="bg-white shadow h-full w-full rounded-[1.25rem] lg:col-span-3">
                   <Employees
                     activeStep={props.activeStep}
                     onStepToggle={updateStepCompletion}
@@ -103,16 +104,16 @@ export default function InitialPage(props: any) {
           />
       </main>
     ) : (
-      <main className="w-full h-screen gap-8 p-8 flex flex-col justify-between">
-        <div>
-          <div className="bg-white shadow py-4 w-full h-fit rounded-[1.25rem]">
+      <main className="w-full h-full p-4 gap-4 lg:gap-8 lg:p-8 flex flex-col justify-between">
+        <div className="grid grid-cols-3 gap-6 h-fit w-full">
+          <div className="bg-white shadow py-4 w-full rounded-[1.25rem] col-span-3">
                 <Steps
                   activeStep={props.activeStep}
                   setActiveStep={handleStepClick}
                   steps={props.steps}
                 />
               </div>
-          <div>
+          <div className="col-span-3">
             <Soon />
           </div>
         </div>

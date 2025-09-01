@@ -47,20 +47,20 @@ export default function EmployeeCard(props: EmployeeCardProps) {
     >
       <div className="w-full p-4 grid gap-2">
         <h2 className="text-2xl text-[#707070]">{employee.name}</h2>
-        <div className="flex gap-4">
-          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+        <div className="flex gap-1.5 lg:gap-4">
+          <Badge className="bg-[#649FBF] rounded-4xl lg:px-3 py-0.5">
             {employee.cpf}
           </Badge>
-          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+          <Badge className="bg-[#649FBF] rounded-4xl lg:px-3 py-0.5">
             {employee.isActive ? "Ativo" : "Inativo"}
           </Badge>
-          <Badge className="bg-[#649FBF] rounded-4xl px-3 py-0.5">
+          <Badge className="bg-[#649FBF] rounded-4xl lg:px-3 py-0.5">
             {employee.role}
           </Badge>
         </div>
       </div>
       <Button
-        className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-fit h-full flex items-center justify-center ml-auto"
+        className="cursor-pointer bg-[#649FBF] rounded-r-[.625rem] w-12 lg:w-fit h-full"
         onClick={togglePopUp}
       >
         <FaEllipsisH color="white" className="w-4 h-4 mx-4" />
