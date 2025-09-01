@@ -26,7 +26,7 @@ function App() {
 
   const handleSetActiveField = (value: number) => {
     setActiveField(value);
-    setMenuOpen(false); // fecha o menu
+    setMenuOpen(false);
   }
 
   return (
@@ -50,7 +50,6 @@ function App() {
             <SheetDescription>Menu lateral de navegação</SheetDescription>
           </VisuallyHidden>
 
-          {/* Passe uma versão "mobile" do Aside */}
           <Aside
             activeField={activeField}
             setActiveField={handleSetActiveField}
@@ -59,12 +58,10 @@ function App() {
       </Sheet>
       </div>
 
-      {/* DESKTOP: Aside fixo */}
       <aside className="hidden lg:block">
         <Aside activeField={activeField} setActiveField={setActiveField} />
       </aside>
 
-      {/* MAIN */}
       <main
         style={{
           backgroundImage: `url(${bg})`,
@@ -88,7 +85,6 @@ function App() {
         )}
       </main>
 
-      {/* POPUP */}
       <AnimatePresence>
         {popup && (
           <motion.div

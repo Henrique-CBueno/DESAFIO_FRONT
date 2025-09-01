@@ -35,6 +35,7 @@ export type EmployeeFormState = {
   healthDoc: HealthDoc;
 };
 
+
 const defaultFormState: EmployeeFormState = {
   isActive: true,
   name: "",
@@ -50,6 +51,8 @@ const defaultFormState: EmployeeFormState = {
   healthDoc: { file: null, fileName: "" },
 };
 
+
+
 export default function AddEmployee(
   props: {
     onBack?: () => void;
@@ -64,11 +67,29 @@ export default function AddEmployee(
   
   const [errors, setErrors] = useState<FlattenedErrors | undefined>(undefined);
 
+  
   function update<K extends keyof EmployeeFormState>(
     key: K,
     value: EmployeeFormState[K]
   ) {
     setForm((prev) => ({ ...prev, [key]: value }));
+  }
+
+  function handleUsesEPIChange(usesEPI: boolean) {
+    setForm((prev) => {
+      if (!usesEPI) {
+        return {
+          ...prev,
+          usesEPI: false,
+          activities: [], 
+        };
+      }
+      return {
+        ...prev,
+        usesEPI: true,
+        activities: prev.activities.length > 0 ? prev.activities : [{ activityName: "", epis: [{ epi: "", caNumber: "" }] }],
+      };
+    });
   }
 
   function handleSubmit(event: React.FormEvent) {
@@ -77,7 +98,9 @@ export default function AddEmployee(
     const validationResult = employeeSchema.safeParse(form);
 
     if (!validationResult.success) {
+
       const flattenedErrors = validationResult.error?.flatten();
+      console.log(flattenedErrors)
       
       const processedErrors = { ...flattenedErrors };
       if (form.usesEPI && form.activities.length > 0) {
@@ -167,7 +190,7 @@ export default function AddEmployee(
 
         <EmployeePersonalData form={form} update={update} errors={errors?.fieldErrors} />
 
-        <EmployeeEPISection form={form} setForm={setForm} update={update} errors={errors?.fieldErrors as any} />
+        <EmployeeEPISection form={form} setForm={setForm} errors={errors?.fieldErrors as any} onUsesEPIChange={handleUsesEPIChange} />
 
         {form.usesEPI && (
           <EmployeeHealthDoc form={form} update={update} />

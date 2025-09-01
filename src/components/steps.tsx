@@ -80,7 +80,6 @@ export default function Steps(props: any) {
           </div>
         </div>
       ) : (
-        // === DESKTOP (GRID NORMAL) ===
         <div className="h-full w-full grid grid-cols-9 justify-between pb-2 relative">
           {steps.map((step: any, index: number) => (
             <div

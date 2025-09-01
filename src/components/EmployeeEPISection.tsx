@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { FiCheck } from "react-icons/fi";
 import type { EmployeeFormState } from "./AddEmployee";
 import { Button } from "./ui/button";
@@ -11,20 +10,14 @@ type FieldErrors = z.inferFlattenedErrors<typeof employeeSchema>['fieldErrors'];
 export default function EmployeeEPISection({
   form,
   setForm,
-  update,
   errors,
+  onUsesEPIChange
 }: {
   form: EmployeeFormState;
   setForm: React.Dispatch<React.SetStateAction<EmployeeFormState>>;
-  update: <K extends keyof EmployeeFormState>(
-    key: K,
-    value: EmployeeFormState[K]
-  ) => void;
-  errors: FieldErrors | undefined;
+  errors: FieldErrors | undefined,
+  onUsesEPIChange: (usesEPI: boolean) => void
 }) {
-  const [checked, setChecked] = useState(false);
-
-
 
   function addActivity() {
     setForm((prev) => ({
@@ -100,11 +93,10 @@ export default function EmployeeEPISection({
           <input
             type="checkbox"
             checked={!form.usesEPI}
-            onChange={() => update("usesEPI", !form.usesEPI)}
+            onChange={() => onUsesEPIChange(!form.usesEPI)}
             className="hidden peer"
-            onClick={() => setChecked(!checked)}
           />
-          {checked ? (
+          {!form.usesEPI ? (
             <span className="w-5 h-5 flex items-center justify-center border-2 border-[#649FBF] rounded-[2px]">
               <FiCheck className="text-[#649FBF] text-sm" />
             </span>
@@ -114,7 +106,7 @@ export default function EmployeeEPISection({
           <span>O trabalhador não usa EPI.</span>
         </label>
       </div>
-      {!checked && (
+      {form.usesEPI && (
         <div className="grid gap-4">
           {form.activities.map((activity, activityIndex) => (
             <ActivityCard
