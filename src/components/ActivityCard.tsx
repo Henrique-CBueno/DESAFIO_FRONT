@@ -79,7 +79,7 @@ export default function ActivityCard({
       {form.activities.length > 1 && (
         <Button
           type="button"
-          className="mt-3 w-full rounded-md border border-[#649FBF] bg-white py-2 text-sm"
+          className="mt-3 w-full rounded-md border border-[#649FBF] ubuntu bg-white py-2 text-sm"
           onClick={() => removeActivity(activityIndex)}
         >
           <span className="text-[#649FBF]">Remover atividade</span>

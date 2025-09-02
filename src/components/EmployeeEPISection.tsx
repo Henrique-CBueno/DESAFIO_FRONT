@@ -128,7 +128,7 @@ export default function EmployeeEPISection({
                         focus:ring-2 focus:ring-[#649FBF]/40 mt-3 cursor-pointer"
             onClick={addActivity}
           >
-            <span className="text-[#649FBF]">Adicionar outra atividade</span>
+            <span className="text-[#649FBF] ubuntu">Adicionar outra atividade</span>
           </Button>
         </div>
       )}

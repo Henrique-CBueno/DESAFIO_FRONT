@@ -179,12 +179,12 @@ export default function AddEmployee(
   }
 
   return (
-    <div className="h-full">
+    <div className="h-full" id="addEmployye">
       <EmployeeHeader onBack={props.onBack} />
 
       <form
         onSubmit={handleSubmit}
-        className="px-6 py-4 grid gap-4 text-[#272F33]"
+        className="px-6 py-4 grid gap-4 text-[#272F33] "
       >
         <EmployeeStatus value={form.isActive} onChange={(v) => update("isActive", v)} />
 
@@ -198,7 +198,7 @@ export default function AddEmployee(
 
         <Button
           type="submit"
-          className="rounded-xl border border-[#649FBF] py-2 bg-white text-[#649FBF] cursor-pointer mt-3"
+          className="ubuntu rounded-xl border border-[#649FBF] py-2 bg-white text-[#649FBF] cursor-pointer mt-3"
         >
           Salvar
         </Button>

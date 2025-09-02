@@ -62,7 +62,7 @@ export default function Employees(props: EmployeesProps) {
   return (
     <div className="h-full">
       <header className="px-4 lg:px-6 py-3 rounded-t-[1.25rem] text-white text-[1.75rem] bg-[#649FBF]">
-        <h1>Funcionário(s)</h1>
+        <h1 className="font-tirra">Funcionário(s)</h1>
       </header>
       <div className="h-full flex flex-col px-4 lg:px-6 py-4 gap-4">
         <div className="grid gap-4">

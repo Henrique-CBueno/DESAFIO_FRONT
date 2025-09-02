@@ -58,10 +58,10 @@ export default function Steps(props: any) {
                 </div>
 
                 <label
-                  className={`select-none cursor-pointer text-[#959595] ${
+                  className={`select-none cursor-pointer text-sm  ${
                     activeStep === step.id || step.isCompleted
                       ? "font-bold text-[#649FBF]"
-                      : ""
+                      : "text-[#959595]"
                   }`}
                   htmlFor={`b${step.id}`}
                 >
@@ -117,10 +117,10 @@ export default function Steps(props: any) {
               </div>
 
               <label
-                className={`select-none cursor-pointer text-[#959595] ${
+                className={`select-none cursor-pointer text-sm ${
                   activeStep === step.id || step.isCompleted
-                    ? "font-bold text-[#649FBF]"
-                    : ""
+                      ? "font-bold text-[#649FBF]"
+                      : "text-[#959595]"
                 }`}
                 htmlFor={`b${step.id}`}
               >

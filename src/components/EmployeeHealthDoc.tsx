@@ -28,14 +28,14 @@ export default function EmployeeHealthDoc({
           </h1>
         </label>
 
-        <div className="rounded-md border border-[#649FBF] py-2 cursor-pointer flex items-center justify-center">
+        <div className="rounded-md border border-[#649FBF] py-2 cursor-pointer flex items-center justify-center transition-all hover:scale-105">
           <input
             id="healthFile"
             type="file"
             onChange={handleFileChange}
             className="hidden"
           />
-          <h2 className="text-[#649FBF] text-sm">Selecionar arquivo</h2>
+          <h2 className="ubuntu text-[#649FBF] text-sm">Selecionar arquivo</h2>
         </div>
       </label>
     </section>

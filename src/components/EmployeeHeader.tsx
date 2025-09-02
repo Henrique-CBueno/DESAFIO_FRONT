@@ -1,6 +1,6 @@
 export default function EmployeeHeader({ onBack }: { onBack?: () => void }) {
     return (
-      <header className="px-6 py-[0.85rem] lg:py-3 rounded-t-[1.25rem] text-white text-[1.65rem] lg:text-[1.75rem] bg-[#649FBF] flex items-center gap-3">
+      <header className="px-6 py-[0.87rem] lg:py-3 rounded-t-[1.25rem] text-white text-[1.63rem] lg:text-[1.75rem] bg-[#649FBF] flex items-center gap-3 ubuntu" >
         <button onClick={onBack} className="text-white">←</button>
         <h1>Adicionar Funcionário</h1>
       </header>
