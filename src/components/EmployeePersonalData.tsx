@@ -140,7 +140,7 @@ export default function EmployeePersonalData({
           <label className="text-sm">Cargo</label>
           <div className="relative">
             <select
-              className={`w-full p-2 pr-8 border  rounded-md appearance-none bg-white focus:outline-none focus:ring-2 focus:outline-none ${errors?.role ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
+              className={`w-full p-2 pr-8 border  rounded-md appearance-none bg-white focus:ring-2 focus:outline-none ${errors?.role ? 'border-[#AB2E46] focus:ring-2 focus:ring-red-800/40' : 'border-[#649FBF] focus:ring-2 focus:ring-[#649FBF]/40'}`}
               value={form.role}
               onChange={(e) => update("role", e.target.value)}
             >
