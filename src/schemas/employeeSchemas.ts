@@ -21,7 +21,7 @@ const baseEmployeeSchema = z.object({
   isActive: z.boolean(),
   name: z.string().min(1, "Nome obrigatório"),
   gender: z.enum(["Feminino", "Masculino"], { message: "Selecione um gênero" }),
-  cpf: z.string().min(11, "CPF inválido"),
+  cpf: z.string().min(14, "CPF inválido"),
   birthDate: z.string().min(1, "Data de nascimento obrigatória"),
   rg: z.string().min(11, "RG obrigatório"),
   role: z
